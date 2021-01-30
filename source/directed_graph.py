@@ -33,7 +33,25 @@ class DirectedGraph(Graph):
         return dfs(stack[-1])
 
     def topological_sort(self):
-        if self.has_cycle():
-            print("Cannot sort a cyclic graph")
-        else:
+        explored = []
+        stack = [self.get_vertices()[0]]
+        ordering = {}
+        n = len(self.get_vertices())
+
+        def dfs(node, order):
+            if len(stack) == 0:
+                return ordering
+            else:
+                if node not in explored:
+                    node.append(explored)
+                    stack.pop(node)
+                    adj = self.get_reachable_nodes(node)
+                    if len(adj) == 0:
+                        ordering[node] = order
+                        order -= 1
+                    else:
+                        for a in adj:
+                            stack.append(a)
+                    dfs(stack[-1], order)
+        return dfs(stack[-1], n)
 
