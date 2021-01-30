@@ -111,7 +111,7 @@ class Graph:
             adj_edges = [e for e in self.__edges if e[0] == v]
             return adj_edges
 
-    def get_reachable_nodes(self, v):
+    def get_reachable_nodes(self, v) -> list:
         """
         Returns a list of nodes which are reachable form V (adjacent nodes)
         :param v:
