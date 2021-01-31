@@ -14,23 +14,17 @@ class DirectedGraph(Graph):
         else:
             return False
 
-    def has_cycle(self) -> bool:
-        explored = []
-        stack = [self.get_vertices()[0]]
-
-        def dfs(node):
+    def has_cycle(self, node, explored: list, stack: list) -> bool:
+        stack.pop(-1)
+        if node in explored:
+            return True
+        else:
+            explored.append(node)
+            for n in self.get_reachable_nodes(node):
+                stack.append(n)
             if len(stack) == 0:
                 return False
-            if node in explored:
-                return True
-            else:
-                explored.append(node)
-                stack.pop(node)
-                for n in self.get_reachable_nodes(node):
-                    stack.append(n)
-                dfs(stack[-1])
-
-        return dfs(stack[-1])
+            return self.has_cycle(stack[-1], explored, stack)
 
     def topological_sort(self):
         explored = []
@@ -42,9 +36,9 @@ class DirectedGraph(Graph):
             if len(stack) == 0:
                 return ordering
             else:
+                stack.pop(node)
                 if node not in explored:
                     node.append(explored)
-                    stack.pop(node)
                     adj = self.get_reachable_nodes(node)
                     if len(adj) == 0:
                         ordering[node] = order
@@ -53,5 +47,5 @@ class DirectedGraph(Graph):
                         for a in adj:
                             stack.append(a)
                     dfs(stack[-1], order)
-        return dfs(stack[-1], n)
 
+        return dfs(stack[-1], n)
