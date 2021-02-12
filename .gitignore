@@ -3,3 +3,4 @@
 **/.pytest*
 /source/__pycache__/
 /test/__pycache__/
+/resources

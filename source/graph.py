@@ -123,6 +123,14 @@ class Graph:
         else:
             print("Vertex not in graph")
 
+    def remove_duplicate_nodes(self):
+        v = []
+        for x in self.get_vertices():
+            if x not in v:
+                v.append(x)
+        return v
+
+
     def remove_duplicate_edges(self):
         """
         Removes duplicate edges
